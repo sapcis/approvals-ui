@@ -1,0 +1,76 @@
+{
+    "sRequestId": "",
+    "sTitle": "",
+    "oRequesterDetails": {
+        "sRequesterFirstName": "",
+        "sRequesterLastName": "",
+        "sRequesterEmail": "",
+        "sRequesterUserId": "",
+        "sRequesterComment": ""
+    },
+    "oApproverValueHelpType": {
+        "cols": [
+            {
+                "label": "User Name",
+                "template": "UserName"
+            },
+            {
+                "label": "Email",
+                "template": "EmailID"
+            },
+            {
+                "label": "First Name",
+                "template": "FirstName"
+            },
+            {
+                "label": "Last Name",
+                "template": "LastName"
+            }
+        ]
+    },
+    "ApproverValueHelpType": [],
+    "oWatcherValueHelpType": {
+        "cols": [
+            {
+                "label": "User Name",
+                "template": "UserName"
+            },
+            {
+                "label": "Email",
+                "template": "EmailID"
+            },
+            {
+                "label": "First Name",
+                "template": "FirstName"
+            },
+            {
+                "label": "Last Name",
+                "template": "LastName"
+            }
+        ]
+    },
+    "WatcherValueHelpType": [],
+    "oApprovalSteps": [],
+    "oEnable": {
+        "iRequestId": false,
+        "bRegister": true,
+        "sInput": true
+    },
+    "oVisible": {
+        "sText": false,
+        "sInput": true
+    },
+    "sSelectedInput": "",
+    "oDialog": {
+        "sFilterLabel": "",
+        "sDialogDes": "",
+        "sDialogKey": "",
+        "sTitle": ""
+    },
+    "sDefinitionId": "DocumentApproval",
+    "sWorkflowId": "",
+    "sLangCode": "",
+    "sDefaultLang": "EN",
+    "sDefaultLangName": "English",
+    "usingDefaultLang": false
+}

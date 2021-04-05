@@ -1,0 +1,210 @@
+<mvc:View controllerName="ibpm.demo.DocumentCentricStartUI.controller.RequestApproval"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:uxap="sap.uxap"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+    xmlns:commons="sap.suite.ui.commons"
+    id="RequestApproval">
+	<App>
+		<Page title="{i18n>DOCUMENT_CENTRIC_REQUEST}" showFooter="true" showHeader="false">
+			<content>
+                <uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
+					<uxap:headerTitle>
+						<uxap:ObjectPageHeader objectTitle="{i18n>DOCUMENT_CENTRIC_REQUEST}"></uxap:ObjectPageHeader>
+					</uxap:headerTitle>
+					<uxap:sections>
+                        <!-- Requester -->
+                        <uxap:ObjectPageSection titleUppercase="false" title="{i18n>REQUESTER}" titleLevel="H6" showTitle="true">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                    <uxap:blocks>
+                                        <f:SimpleForm id="requesterFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                            labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                            singleContainerFullSize="true">
+                                            <f:content>
+                                                <Label text="{i18n>FIRST_NAME}" required="true"/>
+                                                <Input id="requesterFirstName" value="{mCommon>/oRequesterDetails/sRequesterFirstName}" valueState="{mCommon>/sRequesterFirstNameState}"
+                                                    valueStateText="{mCommon>/sRequesterFirstNameStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                <Label text="{i18n>LAST_NAME}" required="true"/>
+                                                <Input id="requesterLastName" value="{mCommon>/oRequesterDetails/sRequesterLastName}" valueState="{mCommon>/sRequesterLastNameState}"
+                                                    valueStateText="{mCommon>/sRequesterLastNameStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                <Label text="{i18n>EMAIL_ADDRESS}" required="true"/>
+                                                <Input id="requesterEmail" value="{mCommon>/oRequesterDetails/sRequesterEmail}" placeholder="username@example.com" valueState="{mCommon>/sRequesterEmailState}"
+                                                    valueStateText="{mCommon>/sRequesterEmailStateText}" type="Email" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                <Label text="{i18n>USER_ID}" required="true"/>
+                                                <Input id="requesterUserId" value="{mCommon>/oRequesterDetails/sRequesterUserId}" placeholder="P000123" valueState="{mCommon>/sRequesterUserIdState}"
+                                                    valueStateText="{mCommon>/sRequesterUserIdStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                <Label text="{i18n>COMMENT_FROM_REQUESTER}" required="false"/>
+                                                <TextArea id="requesterComment" rows="5" value="{mCommon>/oRequesterDetails/sRequesterComment}" enabled="{mCommon>/oEnable/sInput}"/>
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                        <!-- Request Details -->
+                        <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>REQUEST_DETAILS}" titleLevel="H6">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                    <uxap:blocks>
+                                        <f:SimpleForm id="detailsFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                            labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                            singleContainerFullSize="false">
+                                            <f:content>
+                                                <Label text="{i18n>REQUEST_ID}" required="true"/>
+                                                <Input id="reqId" value="{mCommon>/sRequestId}" editable="false" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                <Label text="{i18n>LABEL_TITLE}" required="true"/>
+                                                <Input id="requestDetailsTitle" value="{mCommon>/sTitle}" valueState="{mCommon>/sTitleState}"
+                                                    valueStateText="{mCommon>/sTitleStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                        <!-- Approval Steps -->
+                        <uxap:ObjectPageSection titleUppercase="false" title="{i18n>APPROVAL_STEPS}" titleLevel="H6" showTitle="true">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                    <uxap:blocks>
+                                        <VBox>
+                                            <commons:ProcessFlow id="processflow1" lanes="{mCommon>/oApprovalSteps}">
+                                                <commons:lanes>
+                                                    <commons:ProcessFlowLaneHeader laneId="{mCommon>StepId}" iconSrc="sap-icon://approvals" 
+                                                        text="{mCommon>StepName}" position="{mCommon>StepPosition}"/>
+                                                </commons:lanes>
+                                            </commons:ProcessFlow>
+                                            <Table id="approversTable" inset="false" 
+                                                items="{
+                                                    path: 'mCommon>/oApprovalSteps'
+                                                    }">
+                                                <headerToolbar>
+                                                    <OverflowToolbar id="otbSubheader">
+                                                        <!-- <Title text="{i18n>APPROVAL_STEPS}" level="H2" /> -->
+                                                        <ToolbarSpacer />
+                                                        <Button id="addApproverButton" icon="sap-icon://add" 
+                                                            type="Transparent" press="onAddApprovalStep" visible="{mCommon>/oEnable/sInput}"/>
+                                                    </OverflowToolbar>
+                                                </headerToolbar>
+                                                <columns>
+                                                    <Column width="5%">
+                                                        <Text text="" />
+                                                    </Column>
+                                                    <Column minScreenWidth="Tablet" demandPopin="true">
+                                                        <!-- <Text text="{i18n>STEP_ID}" /> -->
+                                                        <Label text="{i18n>STEP_ID}" required="true"/>
+                                                    </Column>
+                                                    <Column minScreenWidth="Tablet" demandPopin="true">
+                                                        <!-- <Text text="{i18n>APPROVER}" /> -->
+                                                        <Label text="{i18n>APPROVER}" required="true"/>
+                                                    </Column>
+                                                    <Column minScreenWidth="Tablet" demandPopin="true">
+                                                        <Text text="{i18n>WATCHER}" />
+                                                    </Column>
+                                                    <Column minScreenWidth="Tablet" demandPopin="true">
+                                                        <!-- <Text text="{i18n>DUE_DATE}" /> -->
+                                                        <Label text="{i18n>DUE_DATE}" required="true"/>
+                                                    </Column>
+                                                    <Column minScreenWidth="Tablet" demandPopin="true">
+                                                        <Text text="{i18n>COMMENT_FOR_APPROVER}" />
+                                                    </Column>
+                                                    <Column width="5%" hAlign="End">
+                                                        <Text text="" />
+                                                    </Column>
+                                                </columns>
+                                                <items>
+                                                    <ColumnListItem>
+                                                        <cells>
+                                                            <Text text="{mCommon>StepNumber}" />
+                                                            <Input value="{mCommon>StepName}" valueState="{mCommon>StepNameState}" valueStateText="{mCommon>StepNameStateText}" 
+                                                                editable="true" change="onChange"  enabled="{mCommon>/oEnable/sInput}"/>
+                                                            <Input showValueHelp="true" valueHelpOnly="true" value ="{mCommon>Approver}"
+                                                                valueHelpRequest=".onValueHelpRequested" enabled="{mCommon>/oEnable/sInput}" valueState="{mCommon>ApproverState}"
+                                                                valueStateText="{mCommon>ApproverStateText}" app:inputCustomData="ApproverValueHelpType" change="onChange"/>
+                                                            <Input showValueHelp="true" valueHelpOnly="true" value ="{mCommon>Watcher}" valueHelpRequest=".onValueHelpRequested" 
+                                                                enabled="{mCommon>/oEnable/sInput}" app:inputCustomData="WatcherValueHelpType" change="onChange"/>
+                                                            <DatePicker id="approvalStepDP" value="{mCommon>DueDate}" valueState="{mCommon>DueDateState}" valueStateText="{mCommon>DueDateStateText}" 
+                                                                placeholder="Enter Date ..." change="handleDueDateChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                            <TextArea value="{mCommon>CommentForApprover}" rows="2" enabled="{mCommon>/oEnable/sInput}" width="100%"/>
+                                                            <Button icon="sap-icon://delete" type="Transparent" press="handleDeleteApprovalStep" visible="{mCommon>/oEnable/sInput}"/>
+                                                        </cells>
+                                                    </ColumnListItem>
+                                                </items>
+                                            </Table>
+                                        </VBox>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                        <!-- Attachments -->
+                        <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>ATTACHMENTS}" titleLevel="H6">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection >
+                                    <uxap:blocks>
+                                        <f:SimpleForm id="attachmentsFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                            labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                            singleContainerFullSize="false">
+                                            <f:content>
+                                                <UploadCollection id="UploadCollection" maximumFileSize="10" multiple="false"  
+                                                    instantUpload="true" change="onAttachmentsChange" uploadEnabled="{mCommon>/oEnable/sInput}"
+                                                    fileSizeExceed="onFileSizeExceed" beforeUploadStarts="onBeforeUploadStarts" 
+                                                    uploadButtonInvisible="false" uploadComplete="onUploadComplete"
+                                                    items="{
+                                                        path: '/objects',
+                                                        filters : [
+                                                                { path : 'object/succinctProperties/cmis:baseTypeId', operator : 'EQ', value1 : 'cmis:document'}
+                                                                ],
+                                                        templateShareable: false
+                                                    }">
+                                                    <items>
+                                                        <UploadCollectionItem
+                                                            documentId="{object/succinctProperties/cmis:objectId}"
+                                                            fileName="{object/succinctProperties/cmis:name}"
+                                                            mimeType="{object/succinctProperties/cmis:contentStreamMimeType}"
+                                                            url="{
+                                                                path: 'object/succinctProperties/cmis:objectId',
+                                                                formatter: '.formatDownloadUrl'
+                                                                }"
+                                                            enableEdit="false" enableDelete="{mCommon>/oEnable/sInput}" visibleDelete="{mCommon>/oEnable/sInput}"
+                                                            visibleEdit="false" deletePress="onDeletePressed">
+                                                                <attributes>
+                                                                    <ObjectAttribute title="{i18n>UPLOADED_BY}"
+                                                                        text="{object/succinctProperties/cmis:createdBy}"
+                                                                        active="false" class="displayContents"/>
+                                                                    <ObjectAttribute title="{i18n>UPLOADED_ON}"
+                                                                        text="{
+                                                                            path: 'object/succinctProperties/cmis:creationDate',
+                                                                            formatter: '.formatTimestampToDate'
+                                                                            }"
+                                                                        active="false" class="displayContents"/>
+                                                                    <ObjectAttribute title="{i18n>FILE_SIZE}"
+                                                                        text="{
+                                                                            path: 'object/succinctProperties/cmis:contentStreamLength',
+                                                                            formatter: '.formatFileLength'
+                                                                            }"
+                                                                        active="false" class="displayContents"/>
+                                                                </attributes>
+                                                        </UploadCollectionItem>
+                                                    </items>
+                                                </UploadCollection>
+                                            </f:content>
+                                        </f:SimpleForm>
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                    </uxap:sections>
+			    </uxap:ObjectPageLayout>
+            </content>
+			<footer>
+				<OverflowToolbar id="mFooterId">
+                    <ToolbarSpacer/>
+					<Button text="{i18n>REQUEST_APPROVAL}" press="onPressRequestApproval" enabled="{mCommon>/oEnable/sInput}" type="Emphasized" class="sapUiTinyMarginEnd"/>
+				</OverflowToolbar>
+			</footer>
+		</Page>
+	</App>
+</mvc:View>
