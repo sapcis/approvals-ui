@@ -6,7 +6,9 @@
         "sRequesterLastName": "",
         "sRequesterEmail": "",
         "sRequesterUserId": "",
-        "sRequesterComment": ""
+        "sRequesterComment": "",
+        "sRequesterOrganization": "",
+        "sRequestDescription": ""
     },
     "oApproverValueHelpType": {
         "cols": [
@@ -67,7 +69,7 @@
         "sDialogKey": "",
         "sTitle": ""
     },
-    "sDefinitionId": "DocumentApproval",
+    "sDefinitionId": "DocumentApprovalWorkflow",
     "sWorkflowId": "",
     "sLangCode": "",
     "sDefaultLang": "EN",

@@ -46,9 +46,9 @@ sap.ui.define([
             this.oAttachmentsModel = new JSONModel();
             this.setModel(this.oAttachmentsModel);
 
-            this.byId("approvalStepDP").setMinDate(new Date(new Date().getTime() + (3600 * 1000 * 24)));
+            // this.byId("approvalStepDP").setMinDate(new Date(new Date().getTime() + (3600 * 1000 * 24)));
 
-            this.getUserData(sap.ushell.Container.getService("UserInfo").getUser().getEmail());
+            // this.getUserData(sap.ushell.Container.getService("UserInfo").getUser().getEmail());
 
         },
         /**
@@ -57,7 +57,7 @@ sap.ui.define([
         onAfterRendering: function () {
             // check if 'WorkflowManagement' folder exists
             this.checkIfFolderExists("WorkflowManagement");
-            this.onAddApprovalStep();
+            // this.onAddApprovalStep();
         },
 
         /*
@@ -126,49 +126,49 @@ sap.ui.define([
 
         // add row on "Add Approval Step" button press
         onAddApprovalStep: function () {
-            var oApprovalSteps = this.getParentModel("mCommon").getProperty("/oApprovalSteps");
+            // var oApprovalSteps = this.getParentModel("mCommon").getProperty("/oApprovalSteps");
 
-            oApprovalSteps.push({
-                StepId: "step" + new Date().getTime(),
-                StepPosition: oApprovalSteps.length,
-                StepNumber: oApprovalSteps.length + 1,
-                StepName: "",
-                Approver: "",
-                Watcher: "",
-                DueDate: "",
-                CommentForApprover: ""
-            });
+            // oApprovalSteps.push({
+            //     StepId: "step" + new Date().getTime(),
+            //     StepPosition: oApprovalSteps.length,
+            //     StepNumber: oApprovalSteps.length + 1,
+            //     StepName: "",
+            //     Approver: "",
+            //     Watcher: "",
+            //     DueDate: "",
+            //     CommentForApprover: ""
+            // });
 
-            this.getParentModel("mCommon").setProperty("/oApprovalSteps", oApprovalSteps);
+            // this.getParentModel("mCommon").setProperty("/oApprovalSteps", oApprovalSteps);
             this.getParentModel("mCommon").refresh();
 
             this.getView().byId("processflow1").updateModel();
         },
 
         // remove row on "Delete Approval Step" button press
-        handleDeleteApprovalStep: function (oEvent) {
-            var oApprovalSteps = this.getParentModel("mCommon").getProperty("/oApprovalSteps");
-            var oApprovalStep = oEvent.getSource().getBindingContext("mCommon").getObject();
-            var deletedIndex;
-            for (var i = 0; i < oApprovalSteps.length; i++) {
-                if (oApprovalSteps[i] == oApprovalStep) {
-                    deletedIndex = i;
-                    oApprovalSteps.splice(i, 1);
-                    this.getParentModel("mCommon").refresh();
-                    break;
-                }
-            }
+        // handleDeleteApprovalStep: function (oEvent) {
+        //     var oApprovalSteps = this.getParentModel("mCommon").getProperty("/oApprovalSteps");
+        //     var oApprovalStep = oEvent.getSource().getBindingContext("mCommon").getObject();
+        //     var deletedIndex;
+        //     for (var i = 0; i < oApprovalSteps.length; i++) {
+        //         if (oApprovalSteps[i] == oApprovalStep) {
+        //             deletedIndex = i;
+        //             oApprovalSteps.splice(i, 1);
+        //             this.getParentModel("mCommon").refresh();
+        //             break;
+        //         }
+        //     }
 
-            for (var j = 0; j < oApprovalSteps.length; j++) {
-                if (oApprovalSteps[j].StepPosition > deletedIndex) {
-                    this.getParentModel("mCommon").setProperty("/oApprovalSteps/" + j + "/StepPosition", oApprovalSteps[j].StepPosition - 1);
-                    this.getParentModel("mCommon").setProperty("/oApprovalSteps/" + j + "/StepNumber", oApprovalSteps[j].StepNumber - 1);
-                    this.getParentModel("mCommon").refresh();
-                }
-            }
+        //     for (var j = 0; j < oApprovalSteps.length; j++) {
+        //         if (oApprovalSteps[j].StepPosition > deletedIndex) {
+        //             this.getParentModel("mCommon").setProperty("/oApprovalSteps/" + j + "/StepPosition", oApprovalSteps[j].StepPosition - 1);
+        //             this.getParentModel("mCommon").setProperty("/oApprovalSteps/" + j + "/StepNumber", oApprovalSteps[j].StepNumber - 1);
+        //             this.getParentModel("mCommon").refresh();
+        //         }
+        //     }
 
-            this.getView().byId("processflow1").updateModel();
-        },
+        //     this.getView().byId("processflow1").updateModel();
+        // },
 
         /*
         * DOCUMENT SERVICE INTERACTIONS
@@ -1051,8 +1051,12 @@ sap.ui.define([
             var requesterFields = [
                 "sRequesterFirstName",
                 "sRequesterLastName",
+                "sRequesterOrganization",
                 "sRequesterEmail",
-                "sRequesterUserId"
+                "sRequesterComment"
+                // ,
+                // "sRequesterUserId",
+                // "sRequestDescription"
             ];
             var requesterValue;
             for (var i = 0; i < requesterFields.length; i++) {
@@ -1071,10 +1075,15 @@ sap.ui.define([
                     if (requesterFields[i] === "sRequesterEmail") {
                         oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_EMAIL"));
                     }
-                    if (requesterFields[i] === "sRequesterUserId") {
-                        oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_USER_ID"));
-                    }
-
+                    // if (requesterFields[i] === "sRequesterOrganization") {
+                    //     oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_USER_ID"));
+                    // }
+                    // if (requesterFields[i] === "sRequesterUserId") {
+                    //     oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_USER_ID"));
+                    // }                    
+                    // if (requesterFields[i] === "sRequestDescription") {
+                    //     oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_USER_ID"));
+                    // }   
                     oMdlCommon.setProperty("/" + requesterFields[i] + "State", "Error");
 
                 }
@@ -1092,39 +1101,39 @@ sap.ui.define([
             }
 
             // Checking Aproval Steps Fields
-            var oApprovalSteps = oMdlCommon.getProperty("/oApprovalSteps");
-            if (oApprovalSteps.length < 1) {
-                MessageBox.error(oThisController.getMessage("APPROVAL_STEPS_LENGTH_ERROR"));
-            } else {
-                var approvalStepFields = [
-                    "StepName",
-                    "Approver",
-                    "DueDate"
-                ]
-                var approvalStepValue;
-                for (var j = 0; j < oApprovalSteps.length; j++) {
-                    for (var i = 0; i < approvalStepFields.length; i++) {
-                        approvalStepValue = oMdlCommon.getProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i]);
-                        if (approvalStepValue && approvalStepValue.trim() && approvalStepValue !== "" && approvalStepValue !== "undefined" && approvalStepValue !==
-                            "null") {
-                            oMdlCommon.setProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i] + "State", "None");
-                        } else {
-                            errorExist = true;
-                            if (approvalStepFields[i] === "StepName") {
-                                oMdlCommon.setProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_STEP_NAME"));
-                            }
-                            if (approvalStepFields[i] === "Approver") {
-                                oMdlCommon.setProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_APPROVER"));
-                            }
-                            if (approvalStepFields[i] === "DueDate") {
-                                oMdlCommon.setProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_DUE_DATE"));
-                            }
+            // var oApprovalSteps = oMdlCommon.getProperty("/oApprovalSteps");
+            // if (oApprovalSteps.length < 1) {
+            //     MessageBox.error(oThisController.getMessage("APPROVAL_STEPS_LENGTH_ERROR"));
+            // } else {
+            //     var approvalStepFields = [
+            //         "StepName",
+            //         "Approver",
+            //         "DueDate"
+            //     ]
+            //     var approvalStepValue;
+            //     for (var j = 0; j < oApprovalSteps.length; j++) {
+            //         for (var i = 0; i < approvalStepFields.length; i++) {
+            //             approvalStepValue = oMdlCommon.getProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i]);
+            //             if (approvalStepValue && approvalStepValue.trim() && approvalStepValue !== "" && approvalStepValue !== "undefined" && approvalStepValue !==
+            //                 "null") {
+            //                 oMdlCommon.setProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i] + "State", "None");
+            //             } else {
+            //                 errorExist = true;
+            //                 if (approvalStepFields[i] === "StepName") {
+            //                     oMdlCommon.setProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_STEP_NAME"));
+            //                 }
+            //                 if (approvalStepFields[i] === "Approver") {
+            //                     oMdlCommon.setProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_APPROVER"));
+            //                 }
+            //                 if (approvalStepFields[i] === "DueDate") {
+            //                     oMdlCommon.setProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_DUE_DATE"));
+            //                 }
 
-                            oMdlCommon.setProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i] + "State", "Error");
-                        }
-                    }
-                }
-            }
+            //                 oMdlCommon.setProperty("/" + "oApprovalSteps" + "/" + j + "/" + approvalStepFields[i] + "State", "Error");
+            //             }
+            //         }
+            //     }
+            // }
 
             // Email Validation
             var requesterEmail = oMdlCommon.getProperty("/oRequesterDetails/sRequesterEmail");
@@ -1166,8 +1175,8 @@ sap.ui.define([
             var oThisController = this;
             oThisController.getView().setBusy(true);
             $.ajax({
+                // url: "/ibpmdemoDocumentCentricStartUI/workflowruntime/v1/xsrf-token",
                 url: this._getWorkflowRuntimeBaseURL()+ "/xsrf-token",
-                //"/comsapbpmDocumentCentricStartUI/workflowruntime/v1/xsrf-token",
                 method: "GET",
                 headers: {
                     "X-CSRF-Token": "Fetch"
@@ -1236,21 +1245,21 @@ sap.ui.define([
                 });
             }
 
-            var oApprovalSteps = oMdlCommon.getProperty("/oApprovalSteps");
-            var aApprovalSteps = [];
+            // var oApprovalSteps = oMdlCommon.getProperty("/oApprovalSteps");
+            // var aApprovalSteps = [];
 
-            for (var j = 0; j < oApprovalSteps.length; j++) {
-                aApprovalSteps.push({
-                    StepName: oApprovalSteps[j].StepName,
-                    StepNumber: oApprovalSteps[j].StepNumber,
-                    ApproverData: oApprovalSteps[j].ApproverData,
-                    WatcherData: oApprovalSteps[j].WatcherData ? oApprovalSteps[j].WatcherData : {},
-                    DueDuration: oApprovalSteps[j].DueDuration,
-                    DueDate: oApprovalSteps[j].DueDate,
-                    DueDateFormatted: oApprovalSteps[j].DueDateFormatted,
-                    CommentForApprover: oApprovalSteps[j].CommentForApprover
-                });
-            }
+            // for (var j = 0; j < oApprovalSteps.length; j++) {
+            //     aApprovalSteps.push({
+            //         StepName: oApprovalSteps[j].StepName,
+            //         StepNumber: oApprovalSteps[j].StepNumber,
+            //         ApproverData: oApprovalSteps[j].ApproverData,
+            //         WatcherData: oApprovalSteps[j].WatcherData ? oApprovalSteps[j].WatcherData : {},
+            //         DueDuration: oApprovalSteps[j].DueDuration,
+            //         DueDate: oApprovalSteps[j].DueDate,
+            //         DueDateFormatted: oApprovalSteps[j].DueDateFormatted,
+            //         CommentForApprover: oApprovalSteps[j].CommentForApprover
+            //     });
+            // }
 
             var sDefinitionId = oMdlCommon.getProperty("/sDefinitionId");
             var sPayload = {
@@ -1265,7 +1274,7 @@ sap.ui.define([
                         "UserId": oMdlCommon.getProperty("/oRequesterDetails/sRequesterUserId"),
                         "Comments": oMdlCommon.getProperty("/oRequesterDetails/sRequesterComment")
                     },
-                    "ApprovalSteps": aApprovalSteps,
+                    // "ApprovalSteps": aApprovalSteps,
                     "Attachments": aAttachments
                 }
             };

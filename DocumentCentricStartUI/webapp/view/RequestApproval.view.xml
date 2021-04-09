@@ -31,12 +31,15 @@
                                                 <Label text="{i18n>LAST_NAME}" required="true"/>
                                                 <Input id="requesterLastName" value="{mCommon>/oRequesterDetails/sRequesterLastName}" valueState="{mCommon>/sRequesterLastNameState}"
                                                     valueStateText="{mCommon>/sRequesterLastNameStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                <Label text="{i18n>ORGANIZATION}" required="true"/>
+                                                <Input id="requesterOrganization" value="{mCommon>/oRequesterDetails/sRequesterOrganization}" valueState="{mCommon>/sRequesterOrganizationState}"
+                                                    valueStateText="{mCommon>/sRequesterOrganizationStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
                                                 <Label text="{i18n>EMAIL_ADDRESS}" required="true"/>
                                                 <Input id="requesterEmail" value="{mCommon>/oRequesterDetails/sRequesterEmail}" placeholder="username@example.com" valueState="{mCommon>/sRequesterEmailState}"
                                                     valueStateText="{mCommon>/sRequesterEmailStateText}" type="Email" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
-                                                <Label text="{i18n>USER_ID}" required="true"/>
+                                                <!-- <Label text="{i18n>USER_ID}" required="true"/>
                                                 <Input id="requesterUserId" value="{mCommon>/oRequesterDetails/sRequesterUserId}" placeholder="P000123" valueState="{mCommon>/sRequesterUserIdState}"
-                                                    valueStateText="{mCommon>/sRequesterUserIdStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                    valueStateText="{mCommon>/sRequesterUserIdStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/> -->
                                                 <Label text="{i18n>COMMENT_FROM_REQUESTER}" required="false"/>
                                                 <TextArea id="requesterComment" rows="5" value="{mCommon>/oRequesterDetails/sRequesterComment}" enabled="{mCommon>/oEnable/sInput}"/>
                                             </f:content>
@@ -59,82 +62,13 @@
                                                 <Label text="{i18n>LABEL_TITLE}" required="true"/>
                                                 <Input id="requestDetailsTitle" value="{mCommon>/sTitle}" valueState="{mCommon>/sTitleState}"
                                                     valueStateText="{mCommon>/sTitleStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                <Label text="{i18n>REQUEST_AMOUNT}" required="true"/>
+                                                <Input id="requestAmount" value="{mCommon>/sTitle}" valueState="{mCommon>/sTitleState}"
+                                                    valueStateText="{mCommon>/sTitleStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                <Label text="{i18n>REQUEST_DESCRIPTION}" required="false"/>
+                                                <TextArea id="requestDescription" rows="5" value="{mCommon>/oRequesterDetails/sRequestDescription}" enabled="{mCommon>/oEnable/sInput}"/>
                                             </f:content>
                                         </f:SimpleForm>
-                                    </uxap:blocks>
-                                </uxap:ObjectPageSubSection>
-                            </uxap:subSections>
-                        </uxap:ObjectPageSection>
-                        <!-- Approval Steps -->
-                        <uxap:ObjectPageSection titleUppercase="false" title="{i18n>APPROVAL_STEPS}" titleLevel="H6" showTitle="true">
-                            <uxap:subSections>
-                                <uxap:ObjectPageSubSection>
-                                    <uxap:blocks>
-                                        <VBox>
-                                            <commons:ProcessFlow id="processflow1" lanes="{mCommon>/oApprovalSteps}">
-                                                <commons:lanes>
-                                                    <commons:ProcessFlowLaneHeader laneId="{mCommon>StepId}" iconSrc="sap-icon://approvals" 
-                                                        text="{mCommon>StepName}" position="{mCommon>StepPosition}"/>
-                                                </commons:lanes>
-                                            </commons:ProcessFlow>
-                                            <Table id="approversTable" inset="false" 
-                                                items="{
-                                                    path: 'mCommon>/oApprovalSteps'
-                                                    }">
-                                                <headerToolbar>
-                                                    <OverflowToolbar id="otbSubheader">
-                                                        <!-- <Title text="{i18n>APPROVAL_STEPS}" level="H2" /> -->
-                                                        <ToolbarSpacer />
-                                                        <Button id="addApproverButton" icon="sap-icon://add" 
-                                                            type="Transparent" press="onAddApprovalStep" visible="{mCommon>/oEnable/sInput}"/>
-                                                    </OverflowToolbar>
-                                                </headerToolbar>
-                                                <columns>
-                                                    <Column width="5%">
-                                                        <Text text="" />
-                                                    </Column>
-                                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                                        <!-- <Text text="{i18n>STEP_ID}" /> -->
-                                                        <Label text="{i18n>STEP_ID}" required="true"/>
-                                                    </Column>
-                                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                                        <!-- <Text text="{i18n>APPROVER}" /> -->
-                                                        <Label text="{i18n>APPROVER}" required="true"/>
-                                                    </Column>
-                                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                                        <Text text="{i18n>WATCHER}" />
-                                                    </Column>
-                                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                                        <!-- <Text text="{i18n>DUE_DATE}" /> -->
-                                                        <Label text="{i18n>DUE_DATE}" required="true"/>
-                                                    </Column>
-                                                    <Column minScreenWidth="Tablet" demandPopin="true">
-                                                        <Text text="{i18n>COMMENT_FOR_APPROVER}" />
-                                                    </Column>
-                                                    <Column width="5%" hAlign="End">
-                                                        <Text text="" />
-                                                    </Column>
-                                                </columns>
-                                                <items>
-                                                    <ColumnListItem>
-                                                        <cells>
-                                                            <Text text="{mCommon>StepNumber}" />
-                                                            <Input value="{mCommon>StepName}" valueState="{mCommon>StepNameState}" valueStateText="{mCommon>StepNameStateText}" 
-                                                                editable="true" change="onChange"  enabled="{mCommon>/oEnable/sInput}"/>
-                                                            <Input showValueHelp="true" valueHelpOnly="true" value ="{mCommon>Approver}"
-                                                                valueHelpRequest=".onValueHelpRequested" enabled="{mCommon>/oEnable/sInput}" valueState="{mCommon>ApproverState}"
-                                                                valueStateText="{mCommon>ApproverStateText}" app:inputCustomData="ApproverValueHelpType" change="onChange"/>
-                                                            <Input showValueHelp="true" valueHelpOnly="true" value ="{mCommon>Watcher}" valueHelpRequest=".onValueHelpRequested" 
-                                                                enabled="{mCommon>/oEnable/sInput}" app:inputCustomData="WatcherValueHelpType" change="onChange"/>
-                                                            <DatePicker id="approvalStepDP" value="{mCommon>DueDate}" valueState="{mCommon>DueDateState}" valueStateText="{mCommon>DueDateStateText}" 
-                                                                placeholder="Enter Date ..." change="handleDueDateChange" enabled="{mCommon>/oEnable/sInput}"/>
-                                                            <TextArea value="{mCommon>CommentForApprover}" rows="2" enabled="{mCommon>/oEnable/sInput}" width="100%"/>
-                                                            <Button icon="sap-icon://delete" type="Transparent" press="handleDeleteApprovalStep" visible="{mCommon>/oEnable/sInput}"/>
-                                                        </cells>
-                                                    </ColumnListItem>
-                                                </items>
-                                            </Table>
-                                        </VBox>
                                     </uxap:blocks>
                                 </uxap:ObjectPageSubSection>
                             </uxap:subSections>
