@@ -7,7 +7,7 @@ sap.ui.define([
 
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "ibpm.demo.DocumentCentricStartUI.view.",
+		viewNamespace: "com.sap.bpm.DocumentCentricStartUI.view.",
 		autoWait: true
 	});
 });

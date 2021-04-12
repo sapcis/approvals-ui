@@ -7,7 +7,7 @@ sap.ui.define([
     "use strict";
 
     var oMockServer,
-        _sAppPath = "ibpm/demo/DocumentCentricStartUI/",
+        _sAppPath = "com/sap/bpm/DocumentCentricStartUI/",
         _sJsonFilesPath = _sAppPath + "localService/mockdata";
 
     var oMockServerInterface = {

@@ -1,0 +1,7 @@
+/* Enter your custom styles here */
+.sapUiFormEdit .sapMText {
+    display: inline;
+}
+.textarea {
+  width: 100%;
+}

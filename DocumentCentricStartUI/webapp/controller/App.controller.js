@@ -8,7 +8,7 @@ sap.ui.define([
     function (BaseController) {
         "use strict";
 
-        return BaseController.extend("ibpm.demo.DocumentCentricStartUI.controller.App", {
+        return BaseController.extend("com.sap.bpm.DocumentCentricStartUI.controller.App", {
             onInit: function () {
                 this.fnInitializeApp();
                 this.getContentDensityClass();

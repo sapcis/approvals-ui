@@ -9,7 +9,7 @@ sap.ui.define([
 
 ], function (Controller, UIComponent, JSONModel, BusyDialog) {
     "use strict";
-    return Controller.extend("ibpm.demo.DocumentCentricStartUI.BaseController", {
+    return Controller.extend("com.sap.bpm.DocumentCentricStartUI.BaseController", {
 
         /**
          * Convenience method for getting the view model by name in every controller of the application.
@@ -35,7 +35,7 @@ sap.ui.define([
         fnInitializeApp: function () {
             var oThisController = this;
             var oMdlCommon = oThisController.getParentModel("mCommon");
-            var sRootPath = jQuery.sap.getModulePath("ibpm.demo.DocumentCentricStartUI");
+            var sRootPath = jQuery.sap.getModulePath("com.sap.bpm.DocumentCentricStartUI");
             oMdlCommon.attachRequestCompleted(function (oEvent) {
 
                 var requestId = Math.floor(Date.now() / 1000);

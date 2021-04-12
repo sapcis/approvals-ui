@@ -15,7 +15,7 @@
         {
             "source": "^/workflowruntime/(.*)$",
             "target": "/$1",
-            "service": "ibpm.demo.workflow",
+            "service": "com.sap.bpm.workflow",
             "endpoint": "workflow_rest_url",
             "authenticationType": "xsuaa"
         },

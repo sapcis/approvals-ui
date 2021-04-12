@@ -5,7 +5,7 @@ sap.ui.getCore().attachInit(function () {
 	"use strict";
 
 	sap.ui.require([
-		"ibpm/demo/DocumentCentricStartUI/test/unit/AllTests"
+		"com/sap/bpm/DocumentCentricStartUI/test/unit/AllTests"
 	], function () {
 		QUnit.start();
 	});

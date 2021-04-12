@@ -1,10 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-useless-escape */
-/* eslint-disable no-redeclare */
-
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-// @ts-nocheck
 sap.ui.define([
     "./BaseController",
     "sap/m/MessageToast",
@@ -31,11 +24,11 @@ sap.ui.define([
     var tempFolderObjId,
         token;
 
-    return BaseController.extend("ibpm.demo.DocumentCentricStartUI.controller.ExpenditureRequest", {
+    return BaseController.extend("com.sap.bpm.DocumentCentricStartUI.controller.ExpenditureRequest", {
         /**
          * Called when a controller is instantiated and its View controls (if available) are already created.
          * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-         * @memberOf ibpm.demo.DocumentCentricStartUI.view.ExpenditureRequest
+         * @memberOf com.sap.bpm.DocumentCentricStartUI.view.ExpenditureRequest
          */
         onInit: function () {
             var oThisController = this;
@@ -57,7 +50,7 @@ sap.ui.define([
         onAfterRendering: function () {
             // check if 'WorkflowManagement' folder exists
             this.checkIfFolderExists("WorkflowManagement");
-            // this.onAddApprovalStep();
+            this.onAddApprovalStep();
         },
 
         /*
@@ -76,7 +69,7 @@ sap.ui.define([
             var oView = oThisController.getView();
             oView.setBusy(true);
 
-            var sUrl = this._getSCIMBaseURL()+ '/service/scim/Users?filter=emails eq "' + sEmail + '"';
+            var sUrl = '/comsapbpmDocumentCentricStartUI/scim/service/scim/Users?filter=emails eq "' + sEmail + '"';
             var oSettings = {
                 "url": sUrl,
                 "method": "GET"
@@ -179,13 +172,13 @@ sap.ui.define([
             var oUploadCollection = this.byId("UploadCollection");
             oUploadCollection.setBusy(true);
             var responseStatusCode;
-            var docuServiceBaseUrl = this._getDocServiceRuntimeBaseURL();
+
             if (folderName == "WorkflowManagement") {
-                var sUrl = docuServiceBaseUrl+"/WorkflowManagement/";
+                var sUrl = "/comsapbpmDocumentCentricStartUI/docservice/WorkflowManagement/";
             } else if (folderName == "DocumentCentricApprovalProcess") {
-                var sUrl = docuServiceBaseUrl+"/WorkflowManagement/DocumentCentricApprovalProcess/";
+                var sUrl = "/comsapbpmDocumentCentricStartUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/";
             } else {
-                var sUrl = docuServiceBaseUrl+"/WorkflowManagement/DocumentCentricApprovalProcess/" + folderName + "/";
+                var sUrl = "/comsapbpmDocumentCentricStartUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/" + folderName + "/";
             }
             var oSettings = {
                 "url": sUrl,
@@ -253,22 +246,21 @@ sap.ui.define([
 
         // create folder with a given name
         createFolder: function (folderName) {
-           
+
             var oThisController = this;
-            
-              var docuServiceBaseUrl = this._getDocServiceRuntimeBaseURL();
+
             if (folderName == "WorkflowManagement") {
                 console.log("creating a folder 'root/WorkflowManagement'");
-                var sUrl = docuServiceBaseUrl+"/";
+                var sUrl = "/comsapbpmDocumentCentricStartUI/docservice/";
             } else if (folderName == "DocumentCentricApprovalProcess") {
                 console.log("creating a folder 'root/WorkflowManagement/DocumentCentricApprovalProcess'");
-                var sUrl =  docuServiceBaseUrl+"/WorkflowManagement/";
+                var sUrl = "/comsapbpmDocumentCentricStartUI/docservice/WorkflowManagement/";
             } else {
                 var oUploadCollection = oThisController.byId("UploadCollection");
-                var sAttachmentsUploadURL =  docuServiceBaseUrl+"/WorkflowManagement/DocumentCentricApprovalProcess/" + folderName + "/";
+                var sAttachmentsUploadURL = "/comsapbpmDocumentCentricStartUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/" + folderName + "/";
                 oUploadCollection.setUploadUrl(sAttachmentsUploadURL);
                 console.log("creating temporary folder with a name '" + folderName + "'");
-                var sUrl =  docuServiceBaseUrl+"/WorkflowManagement/DocumentCentricApprovalProcess/";
+                var sUrl = "/comsapbpmDocumentCentricStartUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/";
             }
 
             var oFormData = new window.FormData();
@@ -512,8 +504,8 @@ sap.ui.define([
         // delete temp folder (cleanup)
         deleteTempFolder: function () {
             console.log("deleting temporary folder with a objId '" + tempFolderObjId + "'");
-             var docuServiceBaseUrl = this._getDocServiceRuntimeBaseURL();
-            var sUrl = docuServiceBaseUrl+"/WorkflowManagement/DocumentCentricApprovalProcess/";
+
+            var sUrl = "/comsapbpmDocumentCentricStartUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/";
             var oThisController = this;
 
             var oFormData = new window.FormData();
@@ -551,8 +543,8 @@ sap.ui.define([
         // create permanent folder
         createTargetFolder: function (targetFolderName) {
             console.log("creating a permanent folder 'WorkflowManagement/DocumentCentricApprovalProcess/" + targetFolderName + "/'");
-            var docuServiceBaseUrl = this._getDocServiceRuntimeBaseURL();
-            var sUrl = docuServiceBaseUrl+"/WorkflowManagement/DocumentCentricApprovalProcess/";
+
+            var sUrl = "/comsapbpmDocumentCentricStartUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/";
 
             var oFormData = new window.FormData();
             oFormData.append("cmisAction", "createFolder");
@@ -581,7 +573,7 @@ sap.ui.define([
                 .done(function (results) {
                     var targetFolderId = results.succinctProperties["cmis:objectId"];
                     var oUploadCollection = oThisController.byId("UploadCollection");
-                    var sAttachmentsUploadURL = docuServiceBaseUrl+"/WorkflowManagement/DocumentCentricApprovalProcess/" + targetFolderName + "/";
+                    var sAttachmentsUploadURL = "/comsapbpmDocumentCentricStartUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/" + targetFolderName + "/";
                     oUploadCollection.setUploadUrl(sAttachmentsUploadURL);
                     oThisController.oAttachmentsModel.refresh(true);
                     oThisController.moveFiles(targetFolderId);
@@ -603,8 +595,7 @@ sap.ui.define([
             var oThisController = this,
                 oMdlCommon = oThisController.getParentModel("mCommon"),
                 oAttachmentsModel = oThisController.getModel();
-            var docuServiceBaseUrl = this._getDocServiceRuntimeBaseURL();
-            var sUrl = docuServiceBaseUrl+"/";
+            var sUrl = "/comsapbpmDocumentCentricStartUI/docservice/";
 
             var aObjects = oAttachmentsModel.getData().objects;
             var countMoves = 0;
@@ -643,7 +634,7 @@ sap.ui.define([
                                 duration: 6000
                             });
                         } else {
-                            
+                            ;
                             MessageToast.show(oThisController.getMessage("UNKNOWN_ERROR"));
                         }
                     });
@@ -680,8 +671,8 @@ sap.ui.define([
 
             var oView = oThisController.getView();
             oView.setBusy(true);
-            var scimbaseurl = this._getSCIMBaseURL();
-            var sUrl = scimbaseurl+"/service/scim/Users/";
+
+            var sUrl = "/comsapbpmDocumentCentricStartUI/scim/service/scim/Users/";
             var oSettings = {
                 "url": sUrl,
                 "method": "GET"
@@ -718,8 +709,8 @@ sap.ui.define([
             oView.setBusy(true);
 
             var startIndex = (100 * iteration) + 1;
-            var scimbaseurl = this._getSCIMBaseURL();
-            var sUrl = scimbaseurl+"/service/scim/Users?startIndex=" + startIndex;
+
+            var sUrl = "/comsapbpmDocumentCentricStartUI/scim/service/scim/Users?startIndex=" + startIndex;
             var oSettings = {
                 "url": sUrl,
                 "method": "GET",
@@ -793,7 +784,7 @@ sap.ui.define([
             });
 
             if (!this._oValueHelpDialog) {
-                this._oValueHelpDialog = sap.ui.xmlfragment("ibpm.demo.DocumentCentricStartUI.view.BusinessValueHelp", this);
+                this._oValueHelpDialog = sap.ui.xmlfragment("com.sap.bpm.DocumentCentricStartUI.view.BusinessValueHelp", this);
                 this.getView().addDependent(this._oValueHelpDialog);
             }
 
@@ -1075,15 +1066,10 @@ sap.ui.define([
                     if (requesterFields[i] === "sRequesterEmail") {
                         oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_EMAIL"));
                     }
-                    // if (requesterFields[i] === "sRequesterOrganization") {
-                    //     oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_USER_ID"));
-                    // }
                     // if (requesterFields[i] === "sRequesterUserId") {
                     //     oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_USER_ID"));
-                    // }                    
-                    // if (requesterFields[i] === "sRequestDescription") {
-                    //     oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_USER_ID"));
-                    // }   
+                    // }
+
                     oMdlCommon.setProperty("/" + requesterFields[i] + "State", "Error");
 
                 }
@@ -1175,8 +1161,7 @@ sap.ui.define([
             var oThisController = this;
             oThisController.getView().setBusy(true);
             $.ajax({
-                // url: "/ibpmdemoDocumentCentricStartUI/workflowruntime/v1/xsrf-token",
-                url: this._getWorkflowRuntimeBaseURL()+ "/xsrf-token",
+                url: "/comsapbpmDocumentCentricStartUI/workflowruntime/v1/xsrf-token",
                 method: "GET",
                 headers: {
                     "X-CSRF-Token": "Fetch"
@@ -1201,39 +1186,13 @@ sap.ui.define([
                 }
             });
         },
-        _getWorkflowRuntimeBaseURL: function () {
-            var appId = this.getOwnerComponent().getManifestEntry("/sap.app/id");
-            var appPath = appId.replaceAll(".", "/");
-            var appModulePath = jQuery.sap.getModulePath(appPath);
-
-            return appModulePath + "/workflowruntime/v1";
-        },
-        _getSCIMBaseURL: function () {
-            var appId = this.getOwnerComponent().getManifestEntry("/sap.app/id");
-            var appPath = appId.replaceAll(".", "/");
-            var appModulePath = jQuery.sap.getModulePath(appPath);
-
-            return appModulePath + "/scim";
-         },
-
-         _getDocServiceRuntimeBaseURL: function () {
-            var appId = this.getOwnerComponent().getManifestEntry("/sap.app/id");
-            var appPath = appId.replaceAll(".", "/");
-            var appModulePath = jQuery.sap.getModulePath(appPath);
-
-            return appModulePath + "/docservice";
-        },
-
-
-
 
         startInstance: function (workflowtoken) {
 
             var oThisController = this,
                 oMdlCommon = oThisController.getParentModel("mCommon"),
                 oAttachmentsModel = oThisController.getModel();
-            var sUrl = this._getWorkflowRuntimeBaseURL() + "/workflow-instances";
-            //"/comsapbpmDocumentCentricStartUI/workflowruntime/v1/workflow-instances";
+            var sUrl = "/comsapbpmDocumentCentricStartUI/workflowruntime/v1/workflow-instances";
 
             var aObjects = oAttachmentsModel.getData().objects;
             var aAttachments = [];

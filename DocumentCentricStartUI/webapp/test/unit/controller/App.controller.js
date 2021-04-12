@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"ibpm/demo/DocumentCentricStartUI/controller/App.controller"
+	"com/sap/bpm/DocumentCentricStartUI/controller/App.controller"
 ], function (Controller) {
 	"use strict";
 

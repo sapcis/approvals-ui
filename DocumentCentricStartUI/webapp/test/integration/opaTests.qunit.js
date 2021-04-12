@@ -5,7 +5,7 @@ sap.ui.getCore().attachInit(function () {
 	"use strict";
 
 	sap.ui.require([
-		"ibpm/demo/DocumentCentricStartUI/test/integration/AllJourneys"
+		"com/sap/bpm/DocumentCentricStartUI/test/integration/AllJourneys"
 	], function () {
 		QUnit.start();
 	});

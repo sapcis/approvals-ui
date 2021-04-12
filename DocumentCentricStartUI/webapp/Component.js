@@ -5,11 +5,11 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
-    "ibpm/demo/DocumentCentricStartUI/model/models"
+    "com/sap/bpm/DocumentCentricStartUI/model/models"
 ], function (UIComponent, Device, models) {
     "use strict";
 
-    return UIComponent.extend("ibpm.demo.DocumentCentricStartUI.Component", {
+    return UIComponent.extend("com.sap.bpm.DocumentCentricStartUI.Component", {
 
         metadata: {
             manifest: "json"

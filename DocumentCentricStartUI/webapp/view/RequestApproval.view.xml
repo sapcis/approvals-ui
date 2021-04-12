@@ -1,4 +1,4 @@
-<mvc:View controllerName="ibpm.demo.DocumentCentricStartUI.controller.RequestApproval"
+<mvc:View controllerName="com.sap.bpm.DocumentCentricStartUI.controller.RequestApproval"
 	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
 	xmlns="sap.m"
 	xmlns:l="sap.ui.layout"

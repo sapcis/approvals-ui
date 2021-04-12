@@ -19,7 +19,7 @@ builder:
   - name: webide-extension-task-resources
     afterTask: webide-extension-task-updateManifestJson
     configuration:
-      nameSpace: ibpm/demo
+      nameSpace: com/sap/bpm
   - name: webide-extension-task-copyFile
     afterTask: webide-extension-task-resources
     configuration:

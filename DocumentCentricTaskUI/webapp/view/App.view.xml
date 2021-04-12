@@ -1,0 +1,188 @@
+<mvc:View controllerName="com.sap.bpm.DocumentCentricTaskUI.controller.App" 
+            xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	        xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:uxap="sap.uxap"
+	        xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	        xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>appTitle}" showHeader="false" titleAlignment="Center">
+					<content>
+                        <uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
+                            <uxap:headerTitle>
+                                <uxap:ObjectPageHeader id="approvePageHeader"></uxap:ObjectPageHeader>
+                            </uxap:headerTitle>
+                            <uxap:sections>
+                                <!-- Requester -->
+                                <uxap:ObjectPageSection titleUppercase="false" title="{i18n>REQUESTER}" titleLevel="H6" showTitle="true">
+                                    <uxap:subSections>
+                                        <uxap:ObjectPageSubSection>
+                                            <uxap:blocks>
+                                                <f:SimpleForm id="requesterFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                                    labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                                    singleContainerFullSize="true">
+                                                    <f:content>
+                                                        <Label text="{i18n>FIRST_NAME}"/>
+                                                        <Input value="{/Requester/FirstName}" editable="false"/>
+                                                        <Label text="{i18n>LAST_NAME}"/>
+                                                        <Input value="{/Requester/LastName}" editable="false"/>
+                                                        <Label text="{i18n>COMMENT_FROM_REQUESTER}" />
+                                                        <TextArea rows="5" value="{/Requester/Comments}" editable="false"/>
+                                                    </f:content>
+                                                </f:SimpleForm>
+                                            </uxap:blocks>
+                                        </uxap:ObjectPageSubSection>
+                                    </uxap:subSections>
+                                </uxap:ObjectPageSection>
+                                <!-- Request Details -->
+                                <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>REQUEST_DETAILS}" titleLevel="H6">
+                                    <uxap:subSections>
+                                        <uxap:ObjectPageSubSection >
+                                            <uxap:blocks>
+                                                <f:SimpleForm id="detailsFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                                    labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                                    singleContainerFullSize="false">
+                                                    <f:content>
+                                                        <Label text="{i18n>LABEL_TITLE}"/>
+                                                        <Input value="{/Title}" editable="false"/>
+                                                        <Label text="{i18n>REQUEST_ID}"/>
+                                                        <Input value="{/RequestId}" editable="false"/>
+                                                    </f:content>
+                                                </f:SimpleForm>
+                                            </uxap:blocks>
+                                        </uxap:ObjectPageSubSection>
+                                    </uxap:subSections>
+                                </uxap:ObjectPageSection>
+                                <!-- Step Details -->
+                                <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>STEP_DETAILS}" titleLevel="H6">
+                                    <uxap:subSections>
+                                        <uxap:ObjectPageSubSection >
+                                            <uxap:blocks>
+                                                <f:SimpleForm id="stepDetailsFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                                    labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                                    singleContainerFullSize="false">
+                                                    <f:content>
+                                                        <Label text="{i18n>STEP_NAME}"/>
+                                                        <Input value="{/step/approvalStepData/StepName}" editable="false"/>
+                                                        <Label text="{i18n>COMMENT}"/>
+                                                        <TextArea rows="2" value="{/step/approvalStepData/CommentForApprover}" editable="false"/>
+                                                    </f:content>
+                                                </f:SimpleForm>
+                                            </uxap:blocks>
+                                        </uxap:ObjectPageSubSection>
+                                    </uxap:subSections>
+                                </uxap:ObjectPageSection>
+                                <!-- Attachments -->
+                                <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>ATTACHMENTS}" titleLevel="H6">
+                                    <uxap:subSections>
+                                        <uxap:ObjectPageSubSection >
+                                            <uxap:blocks>
+                                                <f:SimpleForm id="attachmentsFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                                    labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                                    singleContainerFullSize="false">
+                                                    <f:content>
+                                                        <UploadCollection id="UploadCollection" uploadEnabled="false" uploadButtonInvisible="true"
+                                                            items="{
+                                                                path: 'attachmentsModel>/objects',
+                                                                filters : [
+                                                                        { path : 'object/succinctProperties/cmis:baseTypeId', operator : 'EQ', value1 : 'cmis:document'}
+                                                                        ],
+                                                                templateShareable: false
+                                                            }">
+                                                            <items>
+                                                                <UploadCollectionItem
+                                                                    documentId="{attachmentsModel>object/succinctProperties/cmis:objectId}"
+                                                                    fileName="{attachmentsModel>object/succinctProperties/cmis:name}"
+                                                                    mimeType="{attachmentsModel>object/succinctProperties/cmis:contentStreamMimeType}"
+                                                                    url="{
+                                                                        path: 'attachmentsModel>object/succinctProperties/cmis:objectId',
+                                                                        formatter: '.formatDownloadUrl'
+                                                                        }"
+                                                                    enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false">
+                                                                        <attributes>
+                                                                            <ObjectAttribute title="{i18n>UPLOADED_BY}"
+                                                                                text="{attachmentsModel>object/succinctProperties/cmis:createdBy}"
+                                                                                active="false" class="displayContents"/>
+                                                                            <ObjectAttribute title="{i18n>UPLOADED_ON}"
+                                                                                text="{
+                                                                                    path: 'attachmentsModel>object/succinctProperties/cmis:creationDate',
+                                                                                    formatter: '.formatTimestampToDate'
+                                                                                    }"
+                                                                                active="false" class="displayContents"/>
+                                                                            <ObjectAttribute title="{i18n>FILE_SIZE}"
+                                                                                text="{
+                                                                                    path: 'attachmentsModel>object/succinctProperties/cmis:contentStreamLength',
+                                                                                    formatter: '.formatFileLength'
+                                                                                    }"
+                                                                                active="false" class="displayContents"/>
+                                                                        </attributes>
+                                                                </UploadCollectionItem>
+                                                            </items>
+                                                        </UploadCollection>
+                                                    </f:content>
+                                                </f:SimpleForm>
+                                            </uxap:blocks>
+                                        </uxap:ObjectPageSubSection>
+                                    </uxap:subSections>
+                                </uxap:ObjectPageSection>
+                                <!-- Comments -->
+                                <uxap:ObjectPageSection titleUppercase="false" title="{i18n>COMMENTS}" titleLevel="H6" showTitle="true">
+                                    <uxap:subSections>
+                                        <uxap:ObjectPageSubSection>
+                                            <uxap:blocks>
+                                                <f:SimpleForm id="commentsFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+                                                    labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+                                                    singleContainerFullSize="true">
+                                                    <f:content>
+                                                        <Label text="{i18n>COMMENTS}"/>
+                                                        <TextArea rows="10" value="{/comments}" editable="true"/>
+                                                    </f:content>
+                                                </f:SimpleForm>
+                                            </uxap:blocks>
+                                        </uxap:ObjectPageSubSection>
+                                    </uxap:subSections>
+                                </uxap:ObjectPageSection>
+                                <!-- History -->
+                                <uxap:ObjectPageSection titleUppercase="false" title="{i18n>HISTORY}" titleLevel="H6" showTitle="true">
+                                    <uxap:subSections>
+                                        <uxap:ObjectPageSubSection>
+                                            <uxap:blocks>
+                                                <Table inset="false" 
+                                                items="{
+                                                    path: '/approvalHistory'
+                                                    }">
+                                                    <columns>
+                                                        <Column>
+                                                            <Text text="{i18n>USER}" />
+                                                        </Column>
+                                                        <Column>
+                                                            <Text text="{i18n>STEP}" />
+                                                        </Column>
+                                                        <Column>
+                                                            <Text text="{i18n>DECISION}" />
+                                                        </Column>
+                                                        <Column>
+                                                            <Text text="{i18n>COMMENT}" />
+                                                        </Column>
+                                                    </columns>
+                                                    <items>
+                                                        <ColumnListItem>
+                                                            <cells>
+                                                                <Text text="{UserName}" />
+                                                                <Text text="{StepName}" />
+                                                                <Text text="{Decision}" />
+                                                                <Text text="{Comments}" />
+                                                            </cells>
+                                                        </ColumnListItem>
+                                                    </items>
+                                                </Table>
+                                            </uxap:blocks>
+                                        </uxap:ObjectPageSubSection>
+                                    </uxap:subSections>
+                                </uxap:ObjectPageSection>
+                            </uxap:sections>
+                        </uxap:ObjectPageLayout>
+                    </content>
+				</Page>
+			</pages>
+		</App>
+</mvc:View>

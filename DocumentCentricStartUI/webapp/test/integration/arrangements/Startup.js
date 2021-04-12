@@ -3,7 +3,7 @@ sap.ui.define([
 ], function (Opa5) {
 	"use strict";
 
-	return Opa5.extend("ibpm.demo.DocumentCentricStartUI.test.integration.arrangements.Startup", {
+	return Opa5.extend("com.sap.bpm.DocumentCentricStartUI.test.integration.arrangements.Startup", {
 
 		iStartMyApp: function (oOptionsParameter) {
 			var oOptions = oOptionsParameter || {};
@@ -14,7 +14,7 @@ sap.ui.define([
 			// start the app UI component
 			this.iStartMyUIComponent({
 				componentConfig: {
-					name: "ibpm.demo.DocumentCentricStartUI",
+					name: "com.sap.bpm.DocumentCentricStartUI",
 					async: true
 				},
 				hash: oOptions.hash,

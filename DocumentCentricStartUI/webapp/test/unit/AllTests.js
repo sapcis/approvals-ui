@@ -1,5 +1,5 @@
 sap.ui.define([
-	"ibpm/demo/DocumentCentricStartUI/test/unit/controller/App.controller"
+	"com/sap/bpm/DocumentCentricStartUI/test/unit/controller/App.controller"
 ], function () {
 	"use strict";
 });

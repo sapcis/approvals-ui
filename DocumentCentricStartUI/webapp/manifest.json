@@ -1,7 +1,7 @@
 {
     "_version": "1.12.0",
     "sap.app": {
-        "id": "ibpm.demo.DocumentCentricStartUI",
+        "id": "com.sap.bpm.DocumentCentricStartUI",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -30,10 +30,6 @@
             }
         }
     },
-    "sap.cloud": {
-		"public": true,
-		"service": "DocumentCentricApproval"
-	},
     "sap.ui": {
         "technology": "UI5",
         "icons": {
@@ -53,7 +49,7 @@
     "sap.ui5": {
         "flexEnabled": false,
         "rootView": {
-            "viewName": "ibpm.demo.DocumentCentricStartUI.view.App",
+            "viewName": "com.sap.bpm.DocumentCentricStartUI.view.App",
             "type": "XML",
             "async": true,
             "id": "App"
@@ -74,7 +70,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "ibpm.demo.DocumentCentricStartUI.i18n.i18n"
+                    "bundleName": "com.sap.bpm.DocumentCentricStartUI.i18n.i18n"
                 }
             },
             "mCommon": {
@@ -97,7 +93,7 @@
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
                 "async": true,
-                "viewPath": "ibpm.demo.DocumentCentricStartUI.view",
+                "viewPath": "com.sap.bpm.DocumentCentricStartUI.view",
                 "controlAggregation": "pages",
                 "controlId": "app",
                 "clearControlAggregation": false
