@@ -37,8 +37,8 @@ sap.ui.define([
             var startupParameters = this.getComponentData().startupParameters;
             var approveText = this.getMessage("APPROVE");
             var rejectText = this.getMessage("REJECT");
-            var reworkText = this.getMessage("REWORK");
-            var forwardText = this.getMessage("FORWARD");
+            // var reworkText = this.getMessage("REWORK");
+            // var forwardText = this.getMessage("FORWARD");
             var updateText = this.getMessage("UPDATE");
 
             var taskInstanceModel = this.getModel("taskInstanceModel");
@@ -112,57 +112,57 @@ sap.ui.define([
                 * REWORK BUTTON
                 */
                 // Implementation for the rework action
-                var oReworkAction = {
-                    sBtnTxt: reworkText,
-                    onBtnPressed: function () {
-                        var model = oThisController.getModel();
-                        model.refresh(true);
-                        var processContext = model.getData();
+                // var oReworkAction = {
+                //     sBtnTxt: reworkText,
+                //     onBtnPressed: function () {
+                //         var model = oThisController.getModel();
+                //         model.refresh(true);
+                //         var processContext = model.getData();
 
-                        // Call a local method to perform further action
-                        oThisController._triggerComplete(
-                            processContext,
-                            startupParameters.taskModel.getData().InstanceID,
-                            "rework"
-                        );
-                    }
-                };
+                //         // Call a local method to perform further action
+                //         oThisController._triggerComplete(
+                //             processContext,
+                //             startupParameters.taskModel.getData().InstanceID,
+                //             "rework"
+                //         );
+                //     }
+                // };
 
                 // Add 'Rework' action to the task
-                startupParameters.inboxAPI.addAction({
-                    action: oReworkAction.sBtnTxt,
-                    label: oReworkAction.sBtnTxt
-                },
-                    // Set the onClick function
-                    oReworkAction.onBtnPressed);
+                // startupParameters.inboxAPI.addAction({
+                //     action: oReworkAction.sBtnTxt,
+                //     label: oReworkAction.sBtnTxt
+                // },
+                //     // Set the onClick function
+                //     oReworkAction.onBtnPressed);
 
                 /**
                 * FORWARD BUTTON
                 */
                 // Implementation for the forward action
-                var oForwardAction = {
-                    sBtnTxt: forwardText,
-                    onBtnPressed: function () {
-                        var model = oThisController.getModel();
-                        model.refresh(true);
-                        var processContext = model.getData();
+                // var oForwardAction = {
+                //     sBtnTxt: forwardText,
+                //     onBtnPressed: function () {
+                //         var model = oThisController.getModel();
+                //         model.refresh(true);
+                //         var processContext = model.getData();
 
-                        // Call a local method to perform further action
-                        oThisController.getUsers(
-                            processContext,
-                            startupParameters.taskModel.getData().InstanceID,
-                            "forward"
-                        );
-                    }
-                };
+                //         // Call a local method to perform further action
+                //         oThisController.getUsers(
+                //             processContext,
+                //             startupParameters.taskModel.getData().InstanceID,
+                //             "forward"
+                //         );
+                //     }
+                // };
 
-                // Add 'Forward' action to the task
-                startupParameters.inboxAPI.addAction({
-                    action: oForwardAction.sBtnTxt,
-                    label: oForwardAction.sBtnTxt
-                },
-                    // Set the onClick function
-                    oForwardAction.onBtnPressed);
+                // // Add 'Forward' action to the task
+                // startupParameters.inboxAPI.addAction({
+                //     action: oForwardAction.sBtnTxt,
+                //     label: oForwardAction.sBtnTxt
+                // },
+                //     // Set the onClick function
+                //     oForwardAction.onBtnPressed);
             } else {
                 /**
                 * UPDATE BUTTON

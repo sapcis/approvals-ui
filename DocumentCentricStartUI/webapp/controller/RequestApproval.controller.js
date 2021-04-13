@@ -50,7 +50,7 @@ sap.ui.define([
         onAfterRendering: function () {
             // check if 'WorkflowManagement' folder exists
             this.checkIfFolderExists("WorkflowManagement");
-            this.onAddApprovalStep();
+            // this.onAddApprovalStep();
         },
 
         /*
@@ -118,7 +118,7 @@ sap.ui.define([
         },
 
         // add row on "Add Approval Step" button press
-        onAddApprovalStep: function () {
+        // onAddApprovalStep: function () {
             // var oApprovalSteps = this.getParentModel("mCommon").getProperty("/oApprovalSteps");
 
             // oApprovalSteps.push({
@@ -133,10 +133,10 @@ sap.ui.define([
             // });
 
             // this.getParentModel("mCommon").setProperty("/oApprovalSteps", oApprovalSteps);
-            this.getParentModel("mCommon").refresh();
+        //     this.getParentModel("mCommon").refresh();
 
-            this.getView().byId("processflow1").updateModel();
-        },
+        //     this.getView().byId("processflow1").updateModel();
+        // },
 
         // remove row on "Delete Approval Step" button press
         // handleDeleteApprovalStep: function (oEvent) {
@@ -1075,15 +1075,15 @@ sap.ui.define([
                 }
             }
 
-            //Checking Title
-            var titleValue = oMdlCommon.getProperty("/sTitle");
+            //Checking Request Materials
+            var reqMaterialValue = oMdlCommon.getProperty("/sRequestMaterialsState");
 
-            if (titleValue && titleValue.trim() && titleValue !== "" && titleValue !== "undefined" && titleValue !== "null") {
-                oMdlCommon.setProperty("/sTitleState", "None");
+            if (reqMaterialValue && reqMaterialValue.trim() && reqMaterialValue !== "" && reqMaterialValue !== "undefined" && reqMaterialValue !== "null") {
+                oMdlCommon.setProperty("/sRequestMaterialsState", "None");
             } else {
                 errorExist = true;
-                oMdlCommon.setProperty("/sTitleState", "Error");
-                oMdlCommon.setProperty("/sTitleStateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_TITLE"));
+                oMdlCommon.setProperty("/sRequestMaterialsState", "Error");
+                oMdlCommon.setProperty("/sRequestMaterialsStateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_REQ_MATERIAL"));
             }
 
             // Checking Aproval Steps Fields
@@ -1231,7 +1231,13 @@ sap.ui.define([
                         "LastName": oMdlCommon.getProperty("/oRequesterDetails/sRequesterLastName"),
                         "Email": oMdlCommon.getProperty("/oRequesterDetails/sRequesterEmail"),
                         "UserId": oMdlCommon.getProperty("/oRequesterDetails/sRequesterUserId"),
-                        "Comments": oMdlCommon.getProperty("/oRequesterDetails/sRequesterComment")
+                        "Comments": oMdlCommon.getProperty("/oRequesterDetails/sRequesterComment"),
+                        "Organization": oMdlCommon.getProperty("/oRequesterDetails/sRequesterOrganization")
+                    },
+                    "RequestDetails" : {
+                        "Description" :  oMdlCommon.getProperty("/oRequesterDetails/sRequestDescription"),
+                        "Materials" :  oMdlCommon.getProperty("/oRequesterDetails/sRequestMaterials"),
+                        "NetAmount" :  oMdlCommon.getProperty("/oRequesterDetails/sRequestNetAmount")
                     },
                     // "ApprovalSteps": aApprovalSteps,
                     "Attachments": aAttachments
@@ -1257,10 +1263,10 @@ sap.ui.define([
                     oMdlCommon.setProperty("/oEnable/sInput", false);
                     oMdlCommon.setProperty("/oEnable/sInput", false);
                     oMdlCommon.setProperty("/oEnable/bRegister", false);
-                    var currRequestTitle = oMdlCommon.getProperty("/sTitle");
+                    var currRequestTitle = oMdlCommon.getProperty("/sRequestId");
                     oMdlCommon.refresh(true);
                     oThisController.getView().setBusy(false);
-                    MessageBox.success("Request '" + currRequestTitle + "' is submitted.");
+                    MessageBox.success("Заявка '" + currRequestTitle + "' отправлена на утверждение.");
 
                 },
                 error: function (jqXHR, textStatus, errorThrown) {

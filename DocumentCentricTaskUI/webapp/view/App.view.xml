@@ -42,10 +42,14 @@
                                                     labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
                                                     singleContainerFullSize="false">
                                                     <f:content>
-                                                        <Label text="{i18n>LABEL_TITLE}"/>
-                                                        <Input value="{/Title}" editable="false"/>
                                                         <Label text="{i18n>REQUEST_ID}"/>
                                                         <Input value="{/RequestId}" editable="false"/>
+                                                        <Label text="{i18n>REQUEST_MATERIALS}"/>
+                                                        <Input value="{/RequestDetails/Materials}" editable="false"/>                                                        
+                                                        <Label text="{i18n>REQUEST_AMOUNT}"/>
+                                                        <Input value="{/RequestDetails/NetAmount}" editable="false"/>
+                                                        <Label text="{i18n>REQUEST_DESCRIPTION}"/>
+                                                        <TextArea rows="5" value="{/RequestDetails/Description}" editable="false"/>
                                                     </f:content>
                                                 </f:SimpleForm>
                                             </uxap:blocks>
@@ -53,7 +57,7 @@
                                     </uxap:subSections>
                                 </uxap:ObjectPageSection>
                                 <!-- Step Details -->
-                                <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>STEP_DETAILS}" titleLevel="H6">
+                                <!-- <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>STEP_DETAILS}" titleLevel="H6">
                                     <uxap:subSections>
                                         <uxap:ObjectPageSubSection >
                                             <uxap:blocks>
@@ -70,7 +74,7 @@
                                             </uxap:blocks>
                                         </uxap:ObjectPageSubSection>
                                     </uxap:subSections>
-                                </uxap:ObjectPageSection>
+                                </uxap:ObjectPageSection> -->
                                 <!-- Attachments -->
                                 <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>ATTACHMENTS}" titleLevel="H6">
                                     <uxap:subSections>

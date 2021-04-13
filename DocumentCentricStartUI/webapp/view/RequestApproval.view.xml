@@ -59,12 +59,12 @@
                                             <f:content>
                                                 <Label text="{i18n>REQUEST_ID}" required="true"/>
                                                 <Input id="reqId" value="{mCommon>/sRequestId}" editable="false" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
-                                                <Label text="{i18n>LABEL_TITLE}" required="true"/>
-                                                <Input id="requestDetailsTitle" value="{mCommon>/sTitle}" valueState="{mCommon>/sTitleState}"
-                                                    valueStateText="{mCommon>/sTitleStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                <Label text="{i18n>REQUEST_MATERIALS}" required="true"/>
+                                                <Input id="requestMaterials" value="{mCommon>/oRequesterDetails/sRequestMaterials}" valueState="{mCommon>/sRequestMaterialsState}"
+                                                    valueStateText="{mCommon>/sRequestMaterialsStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
                                                 <Label text="{i18n>REQUEST_AMOUNT}" required="true"/>
-                                                <Input id="requestAmount" value="{mCommon>/sTitle}" valueState="{mCommon>/sTitleState}"
-                                                    valueStateText="{mCommon>/sTitleStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
+                                                <Input id="requestAmount" value="{mCommon>/oRequesterDetails/sRequestNetAmount}" valueState="{mCommon>/sRequestNetAmountState}"
+                                                    valueStateText="{mCommon>/sRequestNetAmountStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
                                                 <Label text="{i18n>REQUEST_DESCRIPTION}" required="false"/>
                                                 <TextArea id="requestDescription" rows="5" value="{mCommon>/oRequesterDetails/sRequestDescription}" enabled="{mCommon>/oEnable/sInput}"/>
                                             </f:content>
