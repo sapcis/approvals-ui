@@ -156,6 +156,9 @@
                                                     }">
                                                     <columns>
                                                         <Column>
+                                                            <Text text="{i18n>DEPARTMENT}" />
+                                                        </Column>
+                                                        <Column>
                                                             <Text text="{i18n>USER}" />
                                                         </Column>
                                                         <Column>
@@ -171,6 +174,7 @@
                                                     <items>
                                                         <ColumnListItem>
                                                             <cells>
+                                                                <Text text="{Department}" />
                                                                 <Text text="{UserName}" />
                                                                 <Text text="{StepName}" />
                                                                 <Text text="{Decision}" />
