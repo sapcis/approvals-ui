@@ -20,10 +20,10 @@ modules:
         - DocumentCentricTaskUI-content.zip
       name: DocumentCentricTaskUI
       target-path: resources/
-    # - artifacts:
-    #     - DocumentCentricReworkUI-content.zip
-    #   name: DocumentCentricReworkUI
-    #   target-path: resources/
+    - artifacts:
+        - DocumentCentricReworkUI-content.zip
+      name: DocumentCentricReworkUI
+      target-path: resources/
 - name: DocumentCentricStartUI
   type: html5
   path: DocumentCentricStartUI
@@ -47,14 +47,14 @@ modules:
     commands:
     - npm run build
     supported-platforms: []
-# - name: DocumentCentricReworkUI
-#   type: html5
-#   path: DocumentCentricReworkUI
-#   build-parameters:
-#     builder: custom
-#     commands:
-#     - npm run build
-#     supported-platforms: []
+- name: DocumentCentricReworkUI
+  type: html5
+  path: DocumentCentricReworkUI
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
 
 resources:
 - name: DocumentCentricApprovalProcess_html5_repo_host
