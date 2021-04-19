@@ -59,7 +59,7 @@
                                             <f:content>
                                                 <Label text="{i18n>REQUEST_ID}" required="true"/>
                                                 <Input id="reqId" value="{mCommon>/sRequestId}" editable="false" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
-                                                <Label text="{i18n>REQUEST_MATERIALS}" required="true"/>
+                                                <Label text="{i18n>REQUEST_MATERIALS}" required=""/>
                                                 <Input id="requestMaterials" value="{mCommon>/oRequesterDetails/sRequestMaterials}" valueState="{mCommon>/sRequestMaterialsState}"
                                                     valueStateText="{mCommon>/sRequestMaterialsStateText}" change="onChange" enabled="{mCommon>/oEnable/sInput}"/>
                                                 <Label text="{i18n>REQUEST_AMOUNT}" required="true"/>

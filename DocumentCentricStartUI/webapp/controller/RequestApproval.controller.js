@@ -1044,7 +1044,8 @@ sap.ui.define([
                 "sRequesterLastName",
                 "sRequesterOrganization",
                 "sRequesterEmail",
-                "sRequesterComment"
+                "sRequesterComment",
+                "sRequestMaterials"
                 // ,
                 // "sRequesterUserId",
                 // "sRequestDescription"
@@ -1066,9 +1067,9 @@ sap.ui.define([
                     if (requesterFields[i] === "sRequesterEmail") {
                         oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_EMAIL"));
                     }
-                    // if (requesterFields[i] === "sRequesterUserId") {
-                    //     oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_USER_ID"));
-                    // }
+                    if (requesterFields[i] === "sRequestMaterials") {
+                        oMdlCommon.setProperty("/" + requesterFields[i] + "StateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_REQ_MATERIAL"));
+                    }
 
                     oMdlCommon.setProperty("/" + requesterFields[i] + "State", "Error");
 
@@ -1076,15 +1077,16 @@ sap.ui.define([
             }
 
             //Checking Request Materials
-            var reqMaterialValue = oMdlCommon.getProperty("/sRequestMaterialsState");
+            // var reqMaterialValue = oMdlCommon.getProperty("/sRequestMaterialsState");
+            // var reqMaterialValue = oMdlCommon.getProperty("/oRequesterDetails/sRequestMaterials");
 
-            if (reqMaterialValue && reqMaterialValue.trim() && reqMaterialValue !== "" && reqMaterialValue !== "undefined" && reqMaterialValue !== "null") {
-                oMdlCommon.setProperty("/sRequestMaterialsState", "None");
-            } else {
-                errorExist = true;
-                oMdlCommon.setProperty("/sRequestMaterialsState", "Error");
-                oMdlCommon.setProperty("/sRequestMaterialsStateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_REQ_MATERIAL"));
-            }
+            // if (reqMaterialValue && reqMaterialValue.trim() && reqMaterialValue !== "" && reqMaterialValue !== "undefined" && reqMaterialValue !== "null") {
+            //     oMdlCommon.setProperty("/sRequestMaterialsState", "None");
+            // } else {
+            //     errorExist = true;
+            //     oMdlCommon.setProperty("/sRequestMaterialsState", "Error");
+            //     oMdlCommon.setProperty("/sRequestMaterialsStateText", oThisController.getMessage("FIELD_VALIDATION_ERROR_REQ_MATERIAL"));
+            // }
 
             // Checking Aproval Steps Fields
             // var oApprovalSteps = oMdlCommon.getProperty("/oApprovalSteps");
