@@ -75,59 +75,63 @@
                                         </uxap:ObjectPageSubSection>
                                     </uxap:subSections>
                                 </uxap:ObjectPageSection> -->
-                                <!-- Attachments -->
-                                <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>ATTACHMENTS}" titleLevel="H6">
-                                    <uxap:subSections>
-                                        <uxap:ObjectPageSubSection >
-                                            <uxap:blocks>
-                                                <f:SimpleForm id="attachmentsFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
-                                                    labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
-                                                    singleContainerFullSize="false">
-                                                    <f:content>
-                                                        <UploadCollection id="UploadCollection" uploadEnabled="false" uploadButtonInvisible="true"
-                                                            items="{
-                                                                path: 'attachmentsModel>/objects',
-                                                                filters : [
-                                                                        { path : 'object/succinctProperties/cmis:baseTypeId', operator : 'EQ', value1 : 'cmis:document'}
-                                                                        ],
-                                                                templateShareable: false
-                                                            }">
-                                                            <items>
-                                                                <UploadCollectionItem
-                                                                    documentId="{attachmentsModel>object/succinctProperties/cmis:objectId}"
-                                                                    fileName="{attachmentsModel>object/succinctProperties/cmis:name}"
-                                                                    mimeType="{attachmentsModel>object/succinctProperties/cmis:contentStreamMimeType}"
-                                                                    url="{
-                                                                        path: 'attachmentsModel>object/succinctProperties/cmis:objectId',
-                                                                        formatter: '.formatDownloadUrl'
-                                                                        }"
-                                                                    enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false">
-                                                                        <attributes>
-                                                                            <ObjectAttribute title="{i18n>UPLOADED_BY}"
-                                                                                text="{attachmentsModel>object/succinctProperties/cmis:createdBy}"
-                                                                                active="false" class="displayContents"/>
-                                                                            <ObjectAttribute title="{i18n>UPLOADED_ON}"
-                                                                                text="{
-                                                                                    path: 'attachmentsModel>object/succinctProperties/cmis:creationDate',
-                                                                                    formatter: '.formatTimestampToDate'
-                                                                                    }"
-                                                                                active="false" class="displayContents"/>
-                                                                            <ObjectAttribute title="{i18n>FILE_SIZE}"
-                                                                                text="{
-                                                                                    path: 'attachmentsModel>object/succinctProperties/cmis:contentStreamLength',
-                                                                                    formatter: '.formatFileLength'
-                                                                                    }"
-                                                                                active="false" class="displayContents"/>
-                                                                        </attributes>
-                                                                </UploadCollectionItem>
-                                                            </items>
-                                                        </UploadCollection>
-                                                    </f:content>
-                                                </f:SimpleForm>
-                                            </uxap:blocks>
-                                        </uxap:ObjectPageSubSection>
-                                    </uxap:subSections>
-                                </uxap:ObjectPageSection>
+                        <!-- Attachments -->
+						<uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>ATTACHMENTS}" titleLevel="H6">
+							<uxap:subSections>
+								<uxap:ObjectPageSubSection >
+									<uxap:blocks>
+										<f:SimpleForm id="attachmentsFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
+											labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+											singleContainerFullSize="false">
+											<f:content>
+												<UploadCollection id="UploadCollection" maximumFileSize="10" multiple="false"  
+                                                    instantUpload="true" change="onAttachmentsChange" uploadEnabled="{mCommon>/oEnable/sInput}"
+                                                    fileSizeExceed="onFileSizeExceed" beforeUploadStarts="onBeforeUploadStarts" 
+                                                    uploadButtonInvisible="true" uploadComplete="onUploadComplete"
+                                                    items="{
+                                                        path: 'attachmentsModel>/objects',
+                                                        filters : [
+                                                                { path : 'object/succinctProperties/cmis:baseTypeId', operator : 'EQ', value1 : 'cmis:document'}
+                                                                ],
+                                                        templateShareable: false
+                                                    }">
+													<items>
+                                                        <UploadCollectionItem
+                                                            documentId="{attachmentsModel>object/succinctProperties/cmis:objectId}"
+                                                            fileName="{attachmentsModel>object/succinctProperties/cmis:name}"
+                                                            mimeType="{attachmentsModel>object/succinctProperties/cmis:contentStreamMimeType}"
+                                                            url="{
+                                                                path: 'attachmentsModel>object/succinctProperties/cmis:objectId',
+                                                                formatter: '.formatDownloadUrl'
+                                                                }"
+                                                            enableEdit="false" enableDelete="{mCommon>/oEnable/sInput}" visibleDelete="{mCommon>/oEnable/sInput}"
+                                                            visibleEdit="false" deletePress="onDeletePressed">
+                                                                <attributes>
+                                                                    <ObjectAttribute title="{i18n>UPLOADED_BY}"
+                                                                        text="{attachmentsModel>object/succinctProperties/cmis:createdBy}"
+                                                                        active="false" class="displayContents"/>
+                                                                    <ObjectAttribute title="{i18n>UPLOADED_ON}"
+                                                                        text="{
+                                                                            path: 'attachmentsModel>object/succinctProperties/cmis:creationDate',
+                                                                            formatter: '.formatTimestampToDate'
+                                                                            }"
+                                                                        active="false" class="displayContents"/>
+                                                                    <ObjectAttribute title="{i18n>FILE_SIZE}"
+                                                                        text="{
+                                                                            path: 'attachmentsModel>object/succinctProperties/cmis:contentStreamLength',
+                                                                            formatter: '.formatFileLength'
+                                                                            }"
+                                                                        active="false" class="displayContents"/>
+                                                                </attributes>
+                                                        </UploadCollectionItem>
+                                                    </items>
+												</UploadCollection>
+											</f:content>
+										</f:SimpleForm>
+									</uxap:blocks>
+								</uxap:ObjectPageSubSection>
+							</uxap:subSections>
+						</uxap:ObjectPageSection>
                                 <!-- Comments -->
                                 <uxap:ObjectPageSection titleUppercase="false" title="{i18n>COMMENTS}" titleLevel="H6" showTitle="true">
                                     <uxap:subSections>

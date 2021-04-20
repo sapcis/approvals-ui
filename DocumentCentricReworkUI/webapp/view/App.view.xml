@@ -55,25 +55,6 @@
                                 </uxap:ObjectPageSubSection>
                             </uxap:subSections>
                         </uxap:ObjectPageSection>
-                        <!-- Step Details -->
-                        <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>STEP_DETAILS}" titleLevel="H6">
-                            <uxap:subSections>
-                                <uxap:ObjectPageSubSection >
-                                    <uxap:blocks>
-                                        <f:SimpleForm id="stepDetailsFormId" editable="true" layout="ResponsiveGridLayout" title="" labelSpanXL="4" labelSpanL="4" labelSpanM="12"
-                                            labelSpanS="12" adjustLabelSpan="false" emptySpanXL="3" emptySpanL="3" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
-                                            singleContainerFullSize="false">
-                                            <f:content>
-                                                <Label text="{i18n>STEP_NAME}"/>
-                                                <Input value="{/step/approvalStepData/StepName}" editable="false"/>
-                                                <Label text="{i18n>COMMENT}"/>
-                                                <TextArea rows="2" value="{/step/approvalStepData/CommentForApprover}" editable="true"/>
-                                            </f:content>
-                                        </f:SimpleForm>
-                                    </uxap:blocks>
-                                </uxap:ObjectPageSubSection>
-                            </uxap:subSections>
-                        </uxap:ObjectPageSection>
                         <!-- Attachments -->
 						<uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>ATTACHMENTS}" titleLevel="H6">
 							<uxap:subSections>
@@ -86,7 +67,7 @@
 												<UploadCollection id="UploadCollection" maximumFileSize="10" multiple="false"  
                                                     instantUpload="true" change="onAttachmentsChange" uploadEnabled="{mCommon>/oEnable/sInput}"
                                                     fileSizeExceed="onFileSizeExceed" beforeUploadStarts="onBeforeUploadStarts" 
-                                                    uploadButtonInvisible="false" uploadComplete="onUploadComplete"
+                                                    uploadButtonInvisible="true" uploadComplete="onUploadComplete"
                                                     items="{
                                                         path: 'attachmentsModel>/objects',
                                                         filters : [
