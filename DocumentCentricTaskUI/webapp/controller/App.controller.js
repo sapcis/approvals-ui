@@ -7,12 +7,14 @@ sap.ui.define([
     "sap/m/BusyDialog",
     "sap/ui/core/Fragment",
     "sap/ui/core/syncStyleClass",
+    "sap/ui/commons/FileUploaderParameter",
+    "sap/m/UploadCollectionParameter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/m/VBox",
     "sap/m/Text",
     "sap/m/TextArea",
-], function (BaseController, JSONModel, MessageBox, MessageToast, DateFormat, BusyDialog, Fragment, syncStyleClass, Filter, FilterOperator, VBox, Text, TextArea) {
+], function (BaseController, JSONModel, MessageBox, MessageToast, DateFormat, BusyDialog, Fragment, syncStyleClass, FileUploaderParameter, UploadCollectionParameter, Filter, FilterOperator, VBox, Text, TextArea) {
     "use strict";
     var workflowInstanceId,
         token;
@@ -704,28 +706,103 @@ sap.ui.define([
             });
         },
 
-        /**
-         * DOCUMENT SERVICE INTEGRATION
-         */
+        // /**
+        //  * DOCUMENT SERVICE INTERACTIONS
+        //  */
 
+        // loadAttachments: function () {
+        //     // get workflow ID
+        //     var taskInstanceModel = this.getModel("taskInstanceModel");
+        //     workflowInstanceId = taskInstanceModel.getData().workflowInstanceId;
+
+        //     var sUrl = "/comsapbpmDocumentCentricTaskUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/"
+        //         + workflowInstanceId + "/?succinct=true";
+
+        //     var oSettings = {
+        //         "url": sUrl,
+        //         "method": "GET",
+        //         // "async": false
+        //     };
+        //     var oThisController = this;
+
+        //     $.ajax(oSettings)
+        //         .done(function (results) {
+        //             oThisController._mapAttachmentsModel(results);
+        //         })
+        //         .fail(function (err) {
+        //             if (err !== undefined) {
+        //                 var oErrorResponse = $.parseJSON(err.responseText);
+        //                 MessageToast.show(oErrorResponse.message, {
+        //                     duration: 6000
+        //                 });
+        //             } else {
+        //                 MessageToast.show("Unknown error!");
+        //             }
+        //         });
+        // },
+
+        // // assign data to attachments model
+        // _mapAttachmentsModel: function (data) {
+        //     this.oAttachmentsModel.setData(data);
+        //     this.oAttachmentsModel.refresh();
+        //     this.getView().setBusy(false);
+        // },
+
+        // // formatting functions
+        // formatTimestampToDate: function (timestamp) {
+        //     var oFormat = DateFormat.getDateTimeInstance();
+        //     return oFormat.format(new Date(timestamp));
+        // },
+
+        // formatFileLength: function (fileSizeInBytes) {
+        //     var i = -1;
+        //     var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+        //     do {
+        //         fileSizeInBytes = fileSizeInBytes / 1024;
+        //         i++;
+        //     } while (fileSizeInBytes > 1024);
+
+        //     return Math.max(fileSizeInBytes, 0.1).toFixed(1) + byteUnits[i];
+        // },
+
+        // formatDownloadUrl: function (objectId) {
+        //     return "/comsapbpmDocumentCentricTaskUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/"
+        //         + workflowInstanceId + "?objectId=" + objectId + "&cmisselector=content";
+        // },
+        /*
+        * DOCUMENT SERVICE INTERACTIONS
+        */
         loadAttachments: function () {
-            // get workflow ID
-            var taskInstanceModel = this.getModel("taskInstanceModel");
-            workflowInstanceId = taskInstanceModel.getData().workflowInstanceId;
+            // get workflow instance ID
+            var workflowInstanceId = this.getModel("taskInstanceModel").getData().workflowInstanceId;
+            var docServieBaseUrl = this._getDocServiceRuntimeBaseURL();
+            var sAttachmentsUploadURL = docServieBaseUrl+"/WorkflowManagement/DocumentCentricApprovalProcess/"
+                + workflowInstanceId + "/";
 
-            var sUrl = "/comsapbpmDocumentCentricTaskUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/"
-                + workflowInstanceId + "/?succinct=true";
+            var oUploadCollection = this.byId("UploadCollection");
+            oUploadCollection.setUploadUrl(sAttachmentsUploadURL);
+            console.log("Upload URL: " + sAttachmentsUploadURL);
 
+            var sUrl = sAttachmentsUploadURL + "?succinct=true";
             var oSettings = {
                 "url": sUrl,
                 "method": "GET",
                 // "async": false
+                "headers": {
+                    "ContentType": 'application/json',
+                    "Accept": 'application/json',
+                    "cache": false,
+                    'X-CSRF-Token': 'Fetch'
+                }
             };
+
             var oThisController = this;
 
             $.ajax(oSettings)
-                .done(function (results) {
+                .done(function (results, textStatus, request) {
+                    token = request.getResponseHeader('X-Csrf-Token');
                     oThisController._mapAttachmentsModel(results);
+                    oUploadCollection.setBusy(false);
                 })
                 .fail(function (err) {
                     if (err !== undefined) {
@@ -734,7 +811,7 @@ sap.ui.define([
                             duration: 6000
                         });
                     } else {
-                        MessageToast.show("Unknown error!");
+                        MessageToast.show(oThisController.getMessage("UNKNOWN_ERROR"));
                     }
                 });
         },
@@ -743,10 +820,97 @@ sap.ui.define([
         _mapAttachmentsModel: function (data) {
             this.oAttachmentsModel.setData(data);
             this.oAttachmentsModel.refresh();
-            this.getView().setBusy(false);
         },
 
-        // formatting functions
+        // set parameters that are rendered as a hidden input field and used in ajax requests
+        onAttachmentsChange: function (oEvent) {
+            var oUploadCollection = oEvent.getSource();
+
+            var cmisActionHiddenFormParam = new UploadCollectionParameter({
+                name: "cmisAction",
+                value: "createDocument" // create file
+            });
+            oUploadCollection.addParameter(cmisActionHiddenFormParam);
+
+            var objectTypeIdHiddenFormParam1 = new UploadCollectionParameter({
+                name: "propertyId[0]",
+                value: "cmis:objectTypeId"
+            });
+            oUploadCollection.addParameter(objectTypeIdHiddenFormParam1);
+
+            var propertyValueHiddenFormParam1 = new UploadCollectionParameter({
+                name: "propertyValue[0]",
+                value: "cmis:document"
+            });
+            oUploadCollection.addParameter(propertyValueHiddenFormParam1);
+
+            var objectTypeIdHiddenFormParam2 = new UploadCollectionParameter({
+                name: "propertyId[1]",
+                value: "cmis:name"
+            });
+            oUploadCollection.addParameter(objectTypeIdHiddenFormParam2);
+
+            var propertyValueHiddenFormParam2 = new UploadCollectionParameter({
+                name: "propertyValue[1]",
+                value: oEvent.getParameter("files")[0].name
+            });
+            oUploadCollection.addParameter(propertyValueHiddenFormParam2);
+
+        },
+
+        // show message when user attempts to attach file with size more than 10 MB
+        onFileSizeExceed: function (oEvent) {
+            var maxSize = oEvent.getSource().getMaximumFileSize();
+            var sFileSizeErrorText = this.getMessage("FILE_SIZE_EXCEEDED_ERROR");
+            MessageToast.show(sFileSizeErrorText + " " + maxSize + " MB");
+        },
+
+        // set parameters and headers before upload
+        onBeforeUploadStarts: function (oEvent) {
+            var oUploadCollection = this.getView().byId("UploadCollection"),
+                oFileUploader = oUploadCollection._getFileUploader();
+
+            // use multipart content (multipart/form-data) for posting files
+            oFileUploader.setUseMultipart(true);
+
+            console.log("Before Upload starts");
+
+            // ad csrf token to header of request
+            var oTokenHeader = new UploadCollectionParameter({
+                name: "X-CSRF-Token",
+                value: token
+            });
+            oEvent.getParameters().addHeaderParameter(oTokenHeader);
+
+        },
+
+        // refresh attachments collection after file was uploaded
+        onUploadComplete: function (oEvent) {
+
+            // workaround to remove busy indicator
+            var oUploadCollection = this.byId("UploadCollection"),
+                cItems = oUploadCollection.aItems.length,
+                i;
+
+            for (i = 0; i < cItems; i++) {
+                if (oUploadCollection.aItems[i]._status === "uploading") {
+                    oUploadCollection.aItems[i]._percentUploaded = 100;
+                    oUploadCollection.aItems[i]._status = oUploadCollection._displayStatus;
+                    oUploadCollection._oItemToUpdate = null;
+                    break;
+                }
+            }
+
+            if (oEvent.getParameter("files")[0].status != 201) {
+                var response = JSON.parse(oEvent.getParameter("files")[0].responseRaw);
+                MessageToast.show(response.message);
+            }
+
+            oUploadCollection.getBinding("items").refresh();
+            this.loadAttachments();
+        },
+
+        // attributes formatting functions
         formatTimestampToDate: function (timestamp) {
             var oFormat = DateFormat.getDateTimeInstance();
             return oFormat.format(new Date(timestamp));
@@ -764,9 +928,17 @@ sap.ui.define([
         },
 
         formatDownloadUrl: function (objectId) {
-            return "/comsapbpmDocumentCentricTaskUI/docservice/WorkflowManagement/DocumentCentricApprovalProcess/"
-                + workflowInstanceId + "?objectId=" + objectId + "&cmisselector=content";
-        },
+            var oUploadCollection = this.byId("UploadCollection");
+            var sAttachmentsUploadURL = oUploadCollection.getUploadUrl();
 
+            return sAttachmentsUploadURL + "?objectId=" + objectId + "&cmisselector=content";
+        },
+                 _getDocServiceRuntimeBaseURL: function () {
+            var appId = this.getOwnerComponent().getManifestEntry("/sap.app/id");
+            var appPath = appId.replaceAll(".", "/");
+            var appModulePath = jQuery.sap.getModulePath(appPath);
+
+            return appModulePath + "/docservice";
+        }
     });
 });

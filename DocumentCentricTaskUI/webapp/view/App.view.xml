@@ -87,7 +87,7 @@
 												<UploadCollection id="UploadCollection" maximumFileSize="10" multiple="false"  
                                                     instantUpload="true" change="onAttachmentsChange" uploadEnabled="{mCommon>/oEnable/sInput}"
                                                     fileSizeExceed="onFileSizeExceed" beforeUploadStarts="onBeforeUploadStarts" 
-                                                    uploadButtonInvisible="true" uploadComplete="onUploadComplete"
+                                                    uploadButtonInvisible="false" uploadComplete="onUploadComplete"
                                                     items="{
                                                         path: 'attachmentsModel>/objects',
                                                         filters : [
