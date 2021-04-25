@@ -52,6 +52,28 @@ sap.ui.define([
             // console.log(this.getModel().getProperty("/approvalStatus"))
             if (this.getModel().getProperty("/approvalStatus") != "forward") {
 
+                if (this.getModel().getProperty("/currentStepNumber") == 0) {
+                    approveText = "Проверено. Отправить на разработку приказа";
+                    rejectText = "Вернуть на доработку Заявителю"
+                }
+                if (this.getModel().getProperty("/currentStepNumber") == 1) {
+                    approveText = "Выполнено. Отправить на Изучение проекта приказа";
+                }                
+                if (this.getModel().getProperty("/currentStepNumber") == 2) {
+                    approveText = "Проверено. Отправить на подготовку проекта текстов объявлений.";
+                    rejectText = "Отклонить. Вернуть на доработку"
+                }
+                if (this.getModel().getProperty("/currentStepNumber") == 3) {
+                    approveText = "Выполнено. Отправить на изучение текста объявлений и приглашений";
+                }                
+                if (this.getModel().getProperty("/currentStepNumber") == 4) {
+                    approveText = "Проверено. Отправить на подготовку материалов для объявления тендера";
+                    rejectText = "Отклонить. Вернуть на доработку"
+                }
+                if (this.getModel().getProperty("/currentStepNumber") == 5) {
+                    approveText = "Выполнено. Отправить на публикацию тендера";
+                }                
+
                 /**
                  * APPROVE BUTTON
                  */
@@ -81,34 +103,38 @@ sap.ui.define([
                     // Set the onClick function
                     oApproveAction.onBtnPressed);
 
-                /**
-                * REJECT BUTTON
-                */
-                // Implementation for the reject action
-                var oRejectAction = {
-                    sBtnTxt: rejectText,
-                    onBtnPressed: function () {
-                        var model = oThisController.getModel();
-                        model.refresh(true);
-                        var processContext = model.getData();
 
-                        // Call a local method to perform further action
-                        oThisController._triggerComplete(
-                            processContext,
-                            startupParameters.taskModel.getData().InstanceID,
-                            "reject"
-                        );
-                    }
-                };
+                if (this.getModel().getProperty("/currentStepNumber") != 1 && this.getModel().getProperty("/currentStepNumber") != 3 && this.getModel().getProperty("/currentStepNumber") != 4) {
+                    /**
+                    * REJECT BUTTON
+                    */
+                    // Implementation for the reject action
+                    var oRejectAction = {
+                        sBtnTxt: rejectText,
+                        onBtnPressed: function () {
+                            var model = oThisController.getModel();
+                            model.refresh(true);
+                            var processContext = model.getData();
 
-                // Add 'Reject' action to the task
-                startupParameters.inboxAPI.addAction({
-                    action: oRejectAction.sBtnTxt,
-                    label: oRejectAction.sBtnTxt,
-                    type: "Reject"
-                },
-                    // Set the onClick function
-                    oRejectAction.onBtnPressed);
+                            // Call a local method to perform further action
+                            oThisController._triggerComplete(
+                                processContext,
+                                startupParameters.taskModel.getData().InstanceID,
+                                "reject"
+                            );
+                        }
+                    };
+
+                    // Add 'Reject' action to the task
+                    startupParameters.inboxAPI.addAction({
+                        action: oRejectAction.sBtnTxt,
+                        label: oRejectAction.sBtnTxt,
+                        type: "Reject"
+                    },
+                        // Set the onClick function
+                        oRejectAction.onBtnPressed);
+                }
+
 
                 /**
                 * REWORK BUTTON

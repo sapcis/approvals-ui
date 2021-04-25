@@ -36,7 +36,7 @@
 							</uxap:subSections>
 						</uxap:ObjectPageSection>
                         <!-- Request Details -->
-                        <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>REQUEST_DETAILS}" titleLevel="H6">
+                        <!-- <uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>REQUEST_DETAILS}" titleLevel="H6">
                             <uxap:subSections>
                                 <uxap:ObjectPageSubSection >
                                     <uxap:blocks>
@@ -54,7 +54,7 @@
                                     </uxap:blocks>
                                 </uxap:ObjectPageSubSection>
                             </uxap:subSections>
-                        </uxap:ObjectPageSection>
+                        </uxap:ObjectPageSection> -->
                         <!-- Attachments -->
 						<uxap:ObjectPageSection titleUppercase="false" showTitle="true" title="{i18n>ATTACHMENTS}" titleLevel="H6">
 							<uxap:subSections>
